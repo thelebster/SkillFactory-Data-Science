@@ -12,7 +12,22 @@
 
 ![alt text][Binary_Search]
 
+## Результат
+
+Чтобы запустить интерактивную версию игры выполните команду:
+```python
+python3 i_guess_the_number.py
+```
+
+![demo_screen_recording]
+
+Чтобы сравнить эффективность угадывания разных алгоритмов, выполните команду:
+```python
+python3 benchmark.py
+```
+
 ## Ссылки
 * [Binary search algorithm](https://en.wikipedia.org/wiki/Binary_search_algorithm)
 
 [Binary_Search]: common/Binary_Search_Depiction.png "Visualization of the binary search algorithm where 7 is the target value."
+[demo_screen_recording]: common/guess_the_number_demo.gif
