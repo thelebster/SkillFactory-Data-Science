@@ -9,14 +9,14 @@ import logging
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s', level=logging.ERROR)
 logger = logging.getLogger(__file__)
 
 DATA_DIR = 'data'
 BASE_URL = 'https://www.rospotrebnadzor.ru'
 SEARCH_KEY_WORD = 'COVID-2019 в России'
-START_DATE = os.getenv('START_DATE', '20.03.2020')  # Probably a good way of set initial date.
-SEARCH_URL = f'{BASE_URL}/search/index.php?tags=&q={SEARCH_KEY_WORD}&where=iblock_news&how=d&from={START_DATE}&to='
+START_DATE = '20.03.2020'
+SEARCH_URL_TEMPLATE = '{}/search/index.php?tags=&q={}&where=iblock_news&how=d&from={}&to='
 DATE_RE = re.compile(r'([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})')
 ROW_DATA_RE = re.compile(r'([А-Я][А-яа-я \-\(\)]{3,})\s+(\d+)\s')
 
@@ -27,8 +27,9 @@ def parse_page(page_url):
     return page_data
 
 
-def get_feed_page(page_num=1):
-    page_url = f'{SEARCH_URL}&PAGEN_1={page_num}'
+def get_feed_page(start_date, page_num=1):
+    search_url = SEARCH_URL_TEMPLATE.format(BASE_URL, SEARCH_KEY_WORD, start_date)
+    page_url = f'{search_url}&PAGEN_1={page_num}'
     page_data = parse_page(page_url)
     return page_data
 
@@ -47,12 +48,13 @@ def get_page_links(page_data):
     return page_links
 
 
-def fetch_data():
+def fetch_data(start_date=START_DATE):
+    print(f'Берем данные от {start_date}.')
     page_num = 1
     has_more_pages = True
     while has_more_pages:
         # Get feed page content.
-        feed_page_data = get_feed_page(page_num=page_num)
+        feed_page_data = get_feed_page(start_date, page_num=page_num)
 
         # Check if there is arrow link to the next page is present.
         has_more_pages = True if feed_page_data.find('a', class_='arrow') is not None else False
@@ -62,7 +64,7 @@ def fetch_data():
 
         for page_link in feed_page_links:
             page_url = '{}{}'.format(BASE_URL, page_link.attrs['href'])
-            logger.debug('Process page:', page_url)
+            print('Process page:', page_url)
 
             page_data = parse_page(page_url)
             page_content = page_data.find('div', class_='news-detail')
