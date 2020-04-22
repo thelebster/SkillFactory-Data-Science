@@ -18,7 +18,7 @@ SEARCH_KEY_WORD = 'COVID-2019 в России'
 START_DATE = '20.03.2020'
 SEARCH_URL_TEMPLATE = '{}/search/index.php?tags=&q={}&where=iblock_news&how=d&from={}&to='
 DATE_RE = re.compile(r'([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})')
-ROW_DATA_RE = re.compile(r'([А-Я][А-яа-я \-\(\)]{3,})\s+(\d+)\s')
+ROW_DATA_RE = re.compile(r'([А-Я][А-яа-я \–\-\(\)]{3,})\s+(\d+)\s')
 
 
 def parse_page(page_url):
@@ -108,4 +108,4 @@ def fetch_data(start_date=START_DATE):
 
 
 if __name__ == '__main__':
-    fetch_data()
+    fetch_data(start_date='21.04.2020')
