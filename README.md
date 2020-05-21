@@ -4,7 +4,8 @@ Artifacts repository from the [SkillFactory Data Science course](https://skillfa
 
 ## Проекты
 
-* [Игра: Угадай число](https://github.com/thelebster/skillfactory_rds/tree/master/guess_the_number)
+* [Проект 0. Игра: Угадай число](https://github.com/thelebster/skillfactory_rds/tree/master/guess_the_number)
+* [Проект 1. Кто хочет стать миллионером?](https://github.com/thelebster/skillfactory_rds/tree/master/module_1)
 * [Парсер статистики](https://github.com/thelebster/skillfactory_rds/tree/master/covid19) о подтвержденных случаях новой коронавирусной инфекции COVID-2019 в России с сайта https://www.rospotrebnadzor.ru
 
 ## References
